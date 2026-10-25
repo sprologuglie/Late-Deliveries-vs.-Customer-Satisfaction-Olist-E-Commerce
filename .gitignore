@@ -1,5 +1,2 @@
 data/
-docs/
-sql/
-.vscode/
-visualizations/
+.venv
