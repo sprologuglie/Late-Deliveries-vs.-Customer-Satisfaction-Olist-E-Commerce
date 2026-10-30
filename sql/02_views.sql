@@ -1,6 +1,6 @@
 -- Vista order_revenues
 
-CREATE VIEW v_order_revenues AS
+CREATE OR REPLACE VIEW v_order_revenues AS
 WITH items AS (
   SELECT order_id,
          SUM(price) AS items_value,

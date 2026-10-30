@@ -38,14 +38,20 @@ WHERE order_status = 'delivered' AND order_delivered_customer_date IS NULL
 UNION ALL
 
 -- Per data primo ordine (convertiamo la data in stringa per compatibilità)
-SELECT 'first order date', CAST(MIN(order_approved_at) AS VARCHAR)
+SELECT 'first order date', CAST(MIN(order_purchase_timestamp) AS VARCHAR)
 FROM orders
 
 UNION ALL
 
 -- Per data ultimo ordine
-SELECT 'last order date', CAST(MAX(order_approved_at) AS VARCHAR)
+SELECT 'last order date', CAST(MAX(order_purchase_timestamp) AS VARCHAR)
 FROM orders
+
+UNION ALL
+
+SELECT date_trunc('month', order_purchase_timestamp) AS month, COUNT(*) AS n_orders
+FROM orders
+GROUP BY 1
 
 UNION ALL
 
