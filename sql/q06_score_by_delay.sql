@@ -7,13 +7,7 @@ SELECT
     ROUND(AVG(r.review_score), 2) AS avg_score
 FROM v_delivery
 LEFT JOIN v_reviews r USING(order_id)
-LEFT JOIN order_items i USING(order_id)
-LEFT JOIN sellers s USING(seller_id)
-LEFT JOIN orders o USING(order_id)
-WHERE o.order_purchase_timestamp >= '2017-01-01'  -- Stessi filtri di q2
-        AND o.order_purchase_timestamp < '2018-09-01'
-        AND o.order_status NOT IN ('canceled', 'unavailable')
-        AND i.price IS NOT NULL
+WHERE order_id IN (SELECT order_id FROM v_orders_scope)
+    AND review_score IS NOT NULL
 GROUP BY bucket
-HAVING COUNT(DISTINCT i.order_id) > 30
 ORDER BY bucket;

@@ -28,7 +28,7 @@ SELECT
 FROM orders;
 
 SELECT 
-    COUNT(order_id) AS n_null_order_id
+    COUNT(*) AS n_null_order_id
 FROM orders
 WHERE order_id IS NULL;
 
@@ -53,7 +53,7 @@ SELECT
 FROM order_items;
 
 SELECT 
-    COUNT(DISTINCT (order_id, order_item_id)) AS n_null_combinations
+    COUNT(*) AS n_null_combinations
 FROM order_items
 WHERE order_id IS NULL OR order_item_id IS NULL;
 
@@ -67,7 +67,7 @@ SELECT
 FROM customers;
 
 SELECT 
-    COUNT(customer_id) AS n_null_customer_id
+    COUNT(*) AS n_null_customer_id
 FROM customers
 WHERE customer_id IS NULL;
 
@@ -80,7 +80,7 @@ SELECT
 FROM products;
 
 SELECT 
-    COUNT(product_id) AS n_null_product_id
+    COUNT(*) AS n_null_product_id
 FROM products
 WHERE product_id IS NULL;
 
@@ -92,7 +92,7 @@ SELECT
 FROM sellers;
 
 SELECT 
-    COUNT(seller_id) AS n_null_seller_id
+    COUNT(*) AS n_null_seller_id
 FROM sellers
 WHERE seller_id IS NULL;
 
@@ -110,7 +110,7 @@ SELECT
 FROM order_payments;
 
 SELECT 
-    COUNT(order_id) AS n_null_order_id
+    COUNT(*) AS n_null_order_id
 FROM order_payments
 WHERE order_id IS NULL;
 
@@ -121,7 +121,7 @@ SELECT
     COUNT(DISTINCT review_id) AS n_review_ids
 FROM order_reviews;
 
-SELECT COUNT(*) AS null_names
+SELECT COUNT(*) AS null_review_id
 FROM order_reviews
 WHERE review_id IS NULL;
 
