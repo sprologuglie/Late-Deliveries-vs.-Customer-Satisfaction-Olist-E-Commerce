@@ -1,7 +1,10 @@
 SELECT 
     r.review_score,
     COUNT(*) AS n,
-    AVG(is_late::INT) * 100 AS perc_late,
+    (1 - AVG(is_late::INT)) * 100 AS perc_on_time,
+    AVG(CASE WHEN is_late AND days_late <= 3 THEN 1 ELSE 0 END) * 100 AS perc_1_3_late,
+    AVG(CASE WHEN days_late > 3 AND days_late <= 7 THEN 1 ELSE 0 END) * 100 AS perc_3_7_late,
+    AVG(CASE WHEN days_late > 7 THEN 1 ELSE 0 END) * 100 AS perc_8_more_late,
     ROUND(AVG(CASE WHEN days_late <= 0 THEN NULL 
                     ELSE days_late END), 2) AS avg_delay,
     MEDIAN(CASE WHEN days_late <= 0 THEN NULL 
