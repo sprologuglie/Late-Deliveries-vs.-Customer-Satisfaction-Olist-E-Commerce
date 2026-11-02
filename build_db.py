@@ -1,4 +1,6 @@
-import duckdb, pathlib
+import pathlib
+
+import duckdb
 
 con = duckdb.connect("olist.duckdb")
 for f in ["sql/00_load.sql", "sql/02_views.sql"]:
