@@ -1,9 +1,7 @@
+-- Scope summary: delivered orders with at least one item
 WITH base AS (
 SELECT d.order_id,
-        d.customer_state,
         d.is_late,
-        d.days_late,
-        date_trunc('month', s.order_purchase_timestamp) AS month,
         r.review_score
 FROM v_delivery d
 JOIN v_orders_scope s USING (order_id)
@@ -15,4 +13,4 @@ SELECT COUNT(*)                                         AS n_orders,
         ROUND(100 * COUNT(review_score) / COUNT(*), 1)  AS pct_with_review,
         ROUND(100 * AVG(is_late::INT), 2)               AS pct_late,
         ROUND(AVG(review_score), 3)                     AS avg_score
-FROM base
+FROM base;

@@ -1,19 +1,16 @@
+-- Score distribution inside each delay bucket (% of reviews per score)
 WITH base_data AS (
-    SELECT 
-        CASE 
-            WHEN NOT is_late THEN '0 - In orario'
-            WHEN is_late AND days_late <= 3 THEN '1 - ritardo 1-3gg'
-            WHEN days_late > 3 AND days_late <= 7 THEN '2 - ritardo 4-7gg'
-            ELSE '3 - ritardo 8+gg' END AS bucket,
+    SELECT
+        d.delay_bucket AS bucket,
         r.review_score AS score,
         COUNT(*) AS cnt
-    FROM v_delivery
-    LEFT JOIN v_reviews r USING(order_id)
-    WHERE order_id IN (SELECT order_id FROM v_orders_scope)
-        AND review_score IS NOT NULL
-    GROUP BY 1, 2 
+    FROM v_delivery d
+    JOIN v_orders_scope s USING (order_id)
+    JOIN v_reviews r USING (order_id)
+    WHERE r.review_score IS NOT NULL
+    GROUP BY 1, 2
 )
-SELECT 
+SELECT
     bucket,
     score,
     cnt,
